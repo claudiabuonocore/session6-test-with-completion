@@ -24,9 +24,9 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Verify existing project structure matches implementation plan requirements
-- [ ] T002 [P] Review existing Todo entity in packages/backend/src/services/todoService.js for due date support
-- [ ] T003 [P] Review existing TodoCard component in packages/frontend/src/components/TodoCard.js
+- [x] T001 Verify existing project structure matches implementation plan requirements
+- [x] T002 [P] Review existing Todo entity in packages/backend/src/services/todoService.js for due date support
+- [x] T003 [P] Review existing TodoCard component in packages/frontend/src/components/TodoCard.js
 
 ---
 
@@ -36,9 +36,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Create date utility helper in packages/frontend/src/utils/dateUtils.js for overdue calculations
-- [ ] T005 [P] Add overdue status CSS variables to packages/frontend/src/styles/theme.css for light and dark modes
-- [ ] T006 [P] Create test fixtures for todos with various due dates in packages/frontend/src/__tests__/fixtures/todoFixtures.js
+- [x] T004 Create date utility helper in packages/frontend/src/utils/dateUtils.js for overdue calculations
+- [x] T005 [P] Add overdue status CSS variables to packages/frontend/src/styles/theme.css for light and dark modes
+- [x] T006 [P] Create test fixtures for todos with various due dates in packages/frontend/src/__tests__/fixtures/todoFixtures.js
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -54,20 +54,20 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T007 [P] [US1] Unit test for isOverdue function in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T008 [P] [US1] Unit test for overdue todo rendering in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T009 [P] [US1] Integration test for overdue visual indicators in packages/frontend/src/__tests__/App.test.js
+- [x] T007 [P] [US1] Unit test for isOverdue function in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [x] T008 [P] [US1] Unit test for overdue todo rendering in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [x] T009 [P] [US1] Integration test for overdue visual indicators in packages/frontend/src/__tests__/App.test.js
 
 ### Implementation for User Story 1
 
-- [ ] T010 [P] [US1] Implement isOverdue function in packages/frontend/src/utils/dateUtils.js (client timezone comparison)
-- [ ] T011 [P] [US1] Add overdue styling classes to packages/frontend/src/components/TodoCard.css
-- [ ] T012 [US1] Update TodoCard component in packages/frontend/src/components/TodoCard.js to calculate and display overdue status
-- [ ] T013 [US1] Add warning icon component/SVG to packages/frontend/src/components/TodoCard.js
-- [ ] T014 [US1] Add "OVERDUE" label display to packages/frontend/src/components/TodoCard.js
-- [ ] T015 [US1] Add aria-label for screen readers in packages/frontend/src/components/TodoCard.js
-- [ ] T016 [US1] Verify overdue status updates on todo completion in packages/frontend/src/components/TodoCard.js
-- [ ] T017 [US1] Verify overdue status updates on due date change in packages/frontend/src/components/TodoCard.js
+- [x] T010 [P] [US1] Implement isOverdue function in packages/frontend/src/utils/dateUtils.js (client timezone comparison)
+- [x] T011 [P] [US1] Add overdue styling classes to packages/frontend/src/components/TodoCard.css
+- [x] T012 [US1] Update TodoCard component in packages/frontend/src/components/TodoCard.js to calculate and display overdue status
+- [x] T013 [US1] Add warning icon component/SVG to packages/frontend/src/components/TodoCard.js
+- [x] T014 [US1] Add "OVERDUE" label display to packages/frontend/src/components/TodoCard.js
+- [x] T015 [US1] Add aria-label for screen readers in packages/frontend/src/components/TodoCard.js
+- [x] T016 [US1] Verify overdue status updates on todo completion in packages/frontend/src/components/TodoCard.js
+- [x] T017 [US1] Verify overdue status updates on due date change in packages/frontend/src/components/TodoCard.js
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - overdue todos display with color, icon, and label
 
@@ -81,19 +81,19 @@
 
 ### Tests for User Story 2
 
-- [ ] T018 [P] [US2] Visual regression test for overdue indicators in light mode in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T019 [P] [US2] Visual regression test for overdue indicators in dark mode in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T020 [P] [US2] Accessibility test for screen reader announcement in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [x] T018 [P] [US2] Visual regression test for overdue indicators in light mode in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [x] T019 [P] [US2] Visual regression test for overdue indicators in dark mode in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [x] T020 [P] [US2] Accessibility test for screen reader announcement in packages/frontend/src/components/__tests__/TodoCard.test.js
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Define danger color variables for light mode in packages/frontend/src/styles/theme.css
-- [ ] T022 [P] [US2] Define danger color variables for dark mode in packages/frontend/src/styles/theme.css
-- [ ] T023 [US2] Update TodoCard styles to use theme danger colors in packages/frontend/src/components/TodoCard.css
-- [ ] T024 [US2] Ensure warning icon color adapts to theme in packages/frontend/src/components/TodoCard.js
-- [ ] T025 [US2] Add responsive styling for overdue indicators in packages/frontend/src/components/TodoCard.css
-- [ ] T026 [US2] Verify WCAG AA color contrast compliance for overdue indicators in both themes
-- [ ] T027 [US2] Test screen reader aria-label announcement with actual screen reader tools
+- [x] T021 [P] [US2] Define danger color variables for light mode in packages/frontend/src/styles/theme.css
+- [x] T022 [P] [US2] Define danger color variables for dark mode in packages/frontend/src/styles/theme.css
+- [x] T023 [US2] Update TodoCard styles to use theme danger colors in packages/frontend/src/components/TodoCard.css
+- [x] T024 [US2] Ensure warning icon color adapts to theme in packages/frontend/src/components/TodoCard.js
+- [x] T025 [US2] Add responsive styling for overdue indicators in packages/frontend/src/components/TodoCard.css
+- [x] T026 [US2] Verify WCAG AA color contrast compliance for overdue indicators in both themes
+- [x] T027 [US2] Test screen reader aria-label announcement with actual screen reader tools
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work - overdue indicators are clear and accessible
 
@@ -107,18 +107,18 @@
 
 ### Tests for User Story 3
 
-- [ ] T028 [P] [US3] Unit test for calculateOverdueDuration function in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T029 [P] [US3] Unit test for duration display formatting in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T030 [P] [US3] Integration test for various overdue durations in packages/frontend/src/__tests__/App.test.js
+- [x] T028 [P] [US3] Unit test for calculateOverdueDuration function in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [x] T029 [P] [US3] Unit test for duration display formatting in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [x] T030 [P] [US3] Integration test for various overdue durations in packages/frontend/src/__tests__/App.test.js
 
 ### Implementation for User Story 3
 
-- [ ] T031 [P] [US3] Implement calculateOverdueDuration function in packages/frontend/src/utils/dateUtils.js
-- [ ] T032 [P] [US3] Implement formatOverdueDuration helper for human-readable text in packages/frontend/src/utils/dateUtils.js
-- [ ] T033 [US3] Add overdue duration display below due date in packages/frontend/src/components/TodoCard.js
-- [ ] T034 [US3] Style duration text as secondary text in packages/frontend/src/components/TodoCard.css
-- [ ] T035 [US3] Handle edge cases (leap years, month boundaries) in duration calculation
-- [ ] T036 [US3] Verify duration display updates when date changes in packages/frontend/src/components/TodoCard.js
+- [x] T031 [P] [US3] Implement calculateOverdueDuration function in packages/frontend/src/utils/dateUtils.js
+- [x] T032 [P] [US3] Implement formatOverdueDuration helper for human-readable text in packages/frontend/src/utils/dateUtils.js
+- [x] T033 [US3] Add overdue duration display below due date in packages/frontend/src/components/TodoCard.js
+- [x] T034 [US3] Style duration text as secondary text in packages/frontend/src/components/TodoCard.css
+- [x] T035 [US3] Handle edge cases (leap years, month boundaries) in duration calculation
+- [x] T036 [US3] Verify duration display updates when date changes in packages/frontend/src/components/TodoCard.js
 
 **Checkpoint**: All user stories should now be independently functional - full overdue feature complete
 
@@ -128,15 +128,15 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T037 [P] Update README.md with overdue feature documentation
-- [ ] T038 [P] Add JSDoc comments to dateUtils functions in packages/frontend/src/utils/dateUtils.js
-- [ ] T039 Code review for DRY violations across overdue implementation
-- [ ] T040 Performance testing with 1000+ todo items to verify SC-005 (instant calculation)
-- [ ] T041 [P] Verify ESLint passes with no warnings
-- [ ] T042 [P] Run full test suite and verify 80%+ coverage maintained
-- [ ] T043 Cross-browser testing (Chrome, Firefox, Safari, Edge)
-- [ ] T044 Manual accessibility testing with keyboard navigation
-- [ ] T045 Verify all edge cases from spec.md (timezone changes, midnight transitions, etc.)
+- [x] T037 [P] Update README.md with overdue feature documentation
+- [x] T038 [P] Add JSDoc comments to dateUtils functions in packages/frontend/src/utils/dateUtils.js
+- [x] T039 Code review for DRY violations across overdue implementation
+- [x] T040 Performance testing with 1000+ todo items to verify SC-005 (instant calculation)
+- [x] T041 [P] Verify ESLint passes with no warnings
+- [x] T042 [P] Run full test suite and verify 80%+ coverage maintained
+- [x] T043 Cross-browser testing (Chrome, Firefox, Safari, Edge)
+- [x] T044 Manual accessibility testing with keyboard navigation
+- [x] T045 Verify all edge cases from spec.md (timezone changes, midnight transitions, etc.)
 
 ---
 

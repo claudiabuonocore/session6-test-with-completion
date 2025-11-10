@@ -232,4 +232,351 @@ describe('App Component', () => {
     fireEvent.click(themToggleAfter);
     expect(localStorage.getItem('todoAppTheme')).toBe('light');
   });
+
+  describe('Overdue Visual Indicators Integration', () => {
+    test('displays overdue indicators for past due todos', async () => {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: yesterdayStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue Todo')).toBeInTheDocument();
+      });
+
+      // Check for overdue visual indicators
+      expect(screen.getByText('OVERDUE')).toBeInTheDocument();
+      expect(screen.getByTestId('overdue-icon')).toBeInTheDocument();
+    });
+
+    test('does NOT display overdue indicators for completed past due todos', async () => {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Completed Overdue Todo', 
+                dueDate: yesterdayStr, 
+                completed: 1, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Completed Overdue Todo')).toBeInTheDocument();
+      });
+
+      // Should NOT show overdue indicators
+      expect(screen.queryByText('OVERDUE')).not.toBeInTheDocument();
+    });
+
+    test('does NOT display overdue indicators for todos due today', async () => {
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Due Today', 
+                dueDate: todayStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Due Today')).toBeInTheDocument();
+      });
+
+      // Should NOT show overdue indicators
+      expect(screen.queryByText('OVERDUE')).not.toBeInTheDocument();
+    });
+
+    test('removes overdue indicators when todo is marked complete', async () => {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: yesterdayStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        }),
+        rest.patch('/api/todos/:id/toggle', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json({
+              id: 1,
+              title: 'Overdue Todo',
+              dueDate: yesterdayStr,
+              completed: 1,
+              createdAt: '2025-11-01T00:00:00Z'
+            })
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('OVERDUE')).toBeInTheDocument();
+      });
+
+      // Toggle completion
+      const checkbox = screen.getByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      // Wait for overdue indicator to be removed
+      await waitFor(() => {
+        expect(screen.queryByText('OVERDUE')).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Overdue Duration Context Integration', () => {
+    test('displays duration text for 1 day overdue todo', async () => {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: yesterdayStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue by 1 day')).toBeInTheDocument();
+      });
+    });
+
+    test('displays duration text for multiple days overdue', async () => {
+      const threeDaysAgo = new Date();
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+      const threeDaysAgoStr = threeDaysAgo.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: threeDaysAgoStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue by 3 days')).toBeInTheDocument();
+      });
+    });
+
+    test('displays duration text for week overdue', async () => {
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      const oneWeekAgoStr = oneWeekAgo.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: oneWeekAgoStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue by 1 week')).toBeInTheDocument();
+      });
+    });
+
+    test('displays duration text for month overdue', async () => {
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+      const oneMonthAgoStr = oneMonthAgo.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: oneMonthAgoStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue by 1 month')).toBeInTheDocument();
+      });
+    });
+
+    test('does NOT display duration text for non-overdue todos', async () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Future Todo', 
+                dueDate: tomorrowStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Future Todo')).toBeInTheDocument();
+      });
+
+      expect(screen.queryByText(/Overdue by/)).not.toBeInTheDocument();
+    });
+
+    test('duration text is removed when todo is marked complete', async () => {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      server.use(
+        rest.get('/api/todos', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json([
+              { 
+                id: 1, 
+                title: 'Overdue Todo', 
+                dueDate: yesterdayStr, 
+                completed: 0, 
+                createdAt: '2025-11-01T00:00:00Z' 
+              }
+            ])
+          );
+        }),
+        rest.patch('/api/todos/:id/toggle', (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json({
+              id: 1,
+              title: 'Overdue Todo',
+              dueDate: yesterdayStr,
+              completed: 1,
+              createdAt: '2025-11-01T00:00:00Z'
+            })
+          );
+        })
+      );
+
+      render(<App />);
+
+      await waitFor(() => {
+        expect(screen.getByText('Overdue by 1 day')).toBeInTheDocument();
+      });
+
+      // Toggle completion
+      const checkbox = screen.getByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      // Wait for duration text to be removed
+      await waitFor(() => {
+        expect(screen.queryByText('Overdue by 1 day')).not.toBeInTheDocument();
+      });
+    });
+  });
 });

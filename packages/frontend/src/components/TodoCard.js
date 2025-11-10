@@ -1,5 +1,26 @@
 import React, { useState } from 'react';
+import { isOverdue, calculateOverdueDuration, formatOverdueDuration } from '../utils/dateUtils';
+import './TodoCard.css';
 
+/**
+ * TodoCard Component
+ * Displays a single todo item with editing capabilities and overdue indicators
+ * 
+ * Features:
+ * - Visual overdue indicators (color, icon, label) for past due incomplete todos
+ * - Overdue duration display (e.g., "Overdue by 3 days")
+ * - Inline editing of title and due date
+ * - Accessible with screen reader support (aria-labels)
+ * - Theme-aware styling (light/dark mode)
+ * - Responsive design (mobile/tablet/desktop)
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.todo - Todo object with id, title, dueDate, completed, createdAt
+ * @param {Function} props.onToggle - Callback to toggle todo completion status
+ * @param {Function} props.onEdit - Callback to edit todo (title, dueDate)
+ * @param {Function} props.onDelete - Callback to delete todo
+ * @param {boolean} props.isLoading - Whether an operation is in progress
+ */
 function TodoCard({ todo, onToggle, onEdit, onDelete, isLoading }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(todo.title);
@@ -52,6 +73,11 @@ function TodoCard({ todo, onToggle, onEdit, onDelete, isLoading }) {
     }
   };
 
+  /**
+   * Format ISO date string to human-readable format
+   * @param {string} dateString - ISO date string (YYYY-MM-DD)
+   * @returns {string|null} Formatted date (e.g., "December 25, 2025") or null if no date
+   */
   const formatDate = (dateString) => {
     if (!dateString) return null;
     const date = new Date(dateString);
@@ -61,6 +87,11 @@ function TodoCard({ todo, onToggle, onEdit, onDelete, isLoading }) {
       day: 'numeric',
     });
   };
+
+  // Calculate overdue status
+  const todoIsOverdue = isOverdue(todo.dueDate, todo.completed);
+  const overdueDays = todoIsOverdue ? calculateOverdueDuration(todo.dueDate) : 0;
+  const overdueDurationText = overdueDays > 0 ? formatOverdueDuration(overdueDays) : '';
 
   if (isEditing) {
     return (
@@ -107,22 +138,39 @@ function TodoCard({ todo, onToggle, onEdit, onDelete, isLoading }) {
   }
 
   return (
-    <div className={`todo-card ${todo.completed ? 'completed' : ''}`}>
+    <div className={`todo-card ${todo.completed ? 'completed' : ''} ${todoIsOverdue ? 'overdue' : ''}`}>
       <input
         type="checkbox"
         checked={todo.completed === 1}
         onChange={handleToggle}
         disabled={isLoading}
         className="todo-checkbox"
-        aria-label={`Mark "${todo.title}" as ${todo.completed ? 'incomplete' : 'complete'}`}
+        aria-label={
+          todoIsOverdue
+            ? `Overdue: "${todo.title}", due ${formatDate(todo.dueDate)}. Mark as ${todo.completed ? 'incomplete' : 'complete'}`
+            : `Mark "${todo.title}" as ${todo.completed ? 'incomplete' : 'complete'}`
+        }
       />
 
       <div className="todo-content">
         <h3 className="todo-title">{todo.title}</h3>
         {todo.dueDate && (
-          <p className="todo-due-date">
-            Due: {formatDate(todo.dueDate)}
-          </p>
+          <div>
+            <p className="todo-due-date">
+              Due: {formatDate(todo.dueDate)}
+            </p>
+            {todoIsOverdue && (
+              <div className="overdue-indicator">
+                <span className="overdue-icon" data-testid="overdue-icon" aria-hidden="true">
+                  ⚠
+                </span>
+                <span className="overdue-label">OVERDUE</span>
+              </div>
+            )}
+            {overdueDurationText && (
+              <p className="overdue-duration">{overdueDurationText}</p>
+            )}
+          </div>
         )}
       </div>
 

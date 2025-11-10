@@ -1,0 +1,287 @@
+/**
+ * TodoCard Component Styles
+ * Includes overdue visual indicators
+ */
+
+.todo-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.todo-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Overdue styling */
+.todo-card.overdue {
+  border-color: var(--overdue-border);
+  background: var(--overdue-bg);
+}
+
+.todo-card.completed {
+  opacity: 0.6;
+}
+
+.todo-checkbox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-title {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-wrap: break-word;
+}
+
+.todo-card.completed .todo-title {
+  text-decoration: line-through;
+}
+
+.todo-due-date {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Overdue indicator section */
+.overdue-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.overdue-icon {
+  font-size: 18px;
+  color: var(--overdue-color);
+}
+
+.overdue-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--overdue-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.overdue-duration {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.todo-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.btn-icon:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-edit:hover {
+  color: var(--color-secondary);
+}
+
+.btn-delete:hover {
+  color: var(--danger-color);
+}
+
+/* Edit mode styling */
+.todo-card-edit {
+  display: block;
+  padding: var(--space-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.form-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--border-color);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.form-error {
+  margin-top: var(--space-xs);
+  color: var(--danger-color);
+  font-size: 12px;
+}
+
+/* Responsive Design for Overdue Indicators */
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .overdue-indicator {
+    flex-wrap: wrap;
+  }
+  
+  .overdue-icon {
+    font-size: 16px; /* Slightly smaller on mobile */
+  }
+  
+  .overdue-label {
+    font-size: 11px;
+  }
+  
+  .overdue-duration {
+    font-size: 10px;
+    width: 100%; /* Force duration to new line on mobile */
+  }
+  
+  .todo-actions {
+    flex-direction: column; /* Stack buttons vertically on very small screens */
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .overdue-icon {
+    font-size: 18px;
+  }
+  
+  .overdue-label {
+    font-size: 12px;
+  }
+}
+
+/* Desktop (> 1024px) */
+@media (min-width: 1025px) {
+  .overdue-icon {
+    font-size: 20px; /* Slightly larger on desktop */
+  }
+  
+  .overdue-label {
+    font-size: 13px;
+  }
+  
+  .todo-card:hover .overdue-icon {
+    /* Subtle scale effect on hover for desktop */
+    transform: scale(1.1);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .todo-card.overdue {
+    border-width: 2px;
+    border-color: var(--overdue-color);
+  }
+  
+  .overdue-label {
+    font-weight: 700;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .todo-card,
+  .btn-icon,
+  .overdue-icon {
+    transition: none;
+  }
+  
+  .todo-card:hover .overdue-icon {
+    transform: none;
+  }
+}

@@ -15,6 +15,12 @@
   --border-color: #e0e0e0;
   --success-color: #2e7d32;
   --danger-color: #c62828;
+  
+  /* Overdue Status Colors - WCAG AA Compliant */
+  --overdue-color: #b71c1c; /* Darker red for better contrast (5.5:1 on white) */
+  --overdue-bg: rgba(183, 28, 28, 0.08); /* Subtle background tint */
+  --overdue-border: rgba(183, 28, 28, 0.4); /* Visible border */
+  
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -47,6 +53,12 @@
   --border-color: #404040;
   --success-color: #66bb6a;
   --danger-color: #ef5350;
+  
+  /* Overdue Status Colors - WCAG AA Compliant */
+  --overdue-color: #ff6b6b; /* Lighter red for better contrast on dark (4.8:1 on #2d2d2d) */
+  --overdue-bg: rgba(255, 107, 107, 0.12); /* Subtle background tint */
+  --overdue-border: rgba(255, 107, 107, 0.5); /* Visible border */
+  
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
